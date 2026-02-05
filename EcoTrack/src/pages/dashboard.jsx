@@ -1,16 +1,28 @@
+import React, { useMemo } from "react";
 import { logs } from "../data/logs";
+import { Container, Typography, Card, CardContent } from "@mui/material";
 
-const Dashboard = () => {
-  const totalCarbon = logs.reduce((sum, log) => sum + log.carbon, 0);
+const Dashboard = React.memo(() => {
+  const totalCarbon = useMemo(() =>
+    logs.reduce((sum, log) => sum + log.carbon, 0), []
+  );
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <ul>
-        <li>Total Carbon Emissions: {totalCarbon} kg</li>
-      </ul>
-    </div>
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Dashboard
+      </Typography>
+      <Card>
+        <CardContent>
+          <Typography variant="h6">
+            Total Carbon Emissions: {totalCarbon} kg
+          </Typography>
+        </CardContent>
+      </Card>
+    </Container>
   );
-};
+});
+
+Dashboard.displayName = "Dashboard";
 
 export default Dashboard;
