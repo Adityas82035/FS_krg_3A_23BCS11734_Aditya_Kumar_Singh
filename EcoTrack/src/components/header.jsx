@@ -1,30 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 
-const Header = React.memo(() => {
+const Header = () => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          EcoTrack
-        </Typography>
-        <Box>
-          <Button color="inherit" component={Link} to="/">
-            Dashboard
-          </Button>
-          <Button color="inherit" component={Link} to="/logs">
-            Logs
-          </Button>
-          <Button color="inherit" component={Link} to="/login">
-            Login
-          </Button>
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <header style={{ padding: "1rem", background: "#220594" }}>
+      <h2>EcoTrack</h2>
+      <nav>
+        <Link to="/" style={{ marginRight: "1rem", color: "white" }}>
+          Dashboard
+        </Link>
+        <Link to="/logs" style={{ marginRight: "1rem", color: "white" }}>
+          Logs
+        </Link>
+        <Link to="/login" style={{ marginRight: "1rem", color: "white" }}>
+          Login
+        </Link>
+      </nav>
+    </header>
   );
-});
-
-Header.displayName = "Header";
+};
 
 export default Header;

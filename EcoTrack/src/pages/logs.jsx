@@ -1,34 +1,18 @@
-import React, { useMemo } from "react";
-import { Container, Typography, List, ListItem, ListItemText, Card, CardContent } from "@mui/material";
+import React from "react";
 
-const Logs = React.memo(({ logs }) => {
-  const logItems = useMemo(() =>
-    logs.map((log) => (
-      <ListItem key={log.id}>
-        <ListItemText
-          primary={log.activity}
-          secondary={`${log.carbon} carbon units`}
-        />
-      </ListItem>
-    )), [logs]
-  );
-
+const Logs = ({ logs }) => {
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Activity Logs
-      </Typography>
-      <Card>
-        <CardContent>
-          <List>
-            {logItems}
-          </List>
-        </CardContent>
-      </Card>
-    </Container>
+    <div>
+      <h2>Activity Logs</h2>
+      <ul>
+        {logs.map((log) => (
+          <li key={log.id}>
+            {log.activity}: {log.carbon} carbon units
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-});
-
-Logs.displayName = "Logs";
+};
 
 export default Logs;

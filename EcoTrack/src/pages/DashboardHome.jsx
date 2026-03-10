@@ -1,49 +1,22 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLogs } from "../redux/logsSlice";
+import React from "react";
+import { logs } from "../data/logs";
 
 const DashboardHome = () => {
-  const dispatch = useDispatch();
-  const { data, loading, error } = useSelector(state => state.logs);
-
-  useEffect(() => {
-    dispatch(fetchLogs());
-  }, [dispatch]);
-
-  if (loading) return <p>Loading logs...</p>;
-  if (error) return <p>{error}</p>;
-
-  const highCarbon = data.filter(log => log.carbon > 4);
-  const lowCarbon = data.filter(log => log.carbon <= 4);
+  const total = logs.length;
+  const totalCarbon = logs.reduce((sum, log) => sum + log.carbon, 0);
 
   return (
     <div>
-      <h3>Total Activities</h3>
+      <h3>Summary of Activities</h3>
       <ul>
-        {data.map(log => (
+        {logs.map((log) => (
           <li key={log.id}>
-            {log.activity}: {log.carbon} Kg
+            {log.activity}: {log.carbon} kg CO₂
           </li>
         ))}
       </ul>
-
-      <h3 style={{ color: "red" }}>High Carbon (&gt; 4 Kg)</h3>
-      <ul>
-        {highCarbon.map(log => (
-          <li key={log.id}>{log.activity}</li>
-        ))}
-      </ul>
-
-      <h3 style={{ color: "green" }}>Low Carbon (≤ 4 Kg)</h3>
-      <ul>
-        {lowCarbon.map(log => (
-          <li key={log.id}>{log.activity}</li>
-        ))}
-      </ul>
-
-      <button onClick={() => dispatch(fetchLogs())}>
-        Refresh Logs
-      </button>
+      <p>Total logs: {total}</p>
+      <p>Total carbon: {totalCarbon} kg</p>
     </div>
   );
 };

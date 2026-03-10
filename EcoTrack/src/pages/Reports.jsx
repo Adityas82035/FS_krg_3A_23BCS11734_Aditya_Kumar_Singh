@@ -1,8 +1,9 @@
+// src/pages/Reports.jsx
 const Reports = () => {
   return (
     <div>
-      <h3>Reports Page</h3>
-      <p>This is the Analytics page of EcoTrack.</p>
+      <h4>Reports & Analytics</h4>
+      <p>Detailed reports and carbon footprint analysis coming soon...</p>
     </div>
   );
 };

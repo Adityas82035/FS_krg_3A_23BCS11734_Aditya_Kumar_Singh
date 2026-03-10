@@ -1,47 +1,50 @@
-import React, { Suspense, lazy } from "react";
-import Header from "./components/header";
-import { logs } from "./data/logs";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import DashboardLayout from "./pages/dashboardLayout";
-import DashboardAnalytics from "./pages/dashboardAnalytic";
 
-// Lazy load components for code splitting
-const Logs = lazy(() => import("./pages/logs"));
-const Dashboard = lazy(() => import("./pages/dashboard"));
-const Login = lazy(() => import("./pages/login"));
-const DashboardSummary = lazy(() => import("./pages/dashboardSummary"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const DashboardHome = lazy(() => import("./pages/DashboardHome"));
+const Overview = lazy(() => import("./pages/Overview"));
+const Reports = lazy(() => import("./pages/Reports"));
+const Login = lazy(() => import("./pages/Login"));
+const WaterTracker = lazy(() => import("./pages/WaterTracker"));
+
 const App = () => {
   return (
-    <div>
-      <BrowserRouter>
-        <Header title="EcoTrack - Carbon Footprint Tracker Experiment 1" />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route index element={<DashboardSummary />} />
-            <Route path="analytics" element={<DashboardAnalytics />} />
-            <Route path="summary" element={<DashboardSummary />} />
-            <Route
-              path="/logs"
-              element={
-                <ProtectedRoute>
-                  <Logs logs={logs} />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </div>
+    <Suspense
+      fallback={
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+        >
+          Loading application...
+        </div>
+      }
+    >
+      <Routes>
+        <Route path="/login" element={<Login />} />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<DashboardHome />} />
+          <Route path="overview" element={<Overview />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="water" element={<WaterTracker />} />
+        </Route>
+
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+      </Routes>
+    </Suspense>
   );
 };
 
